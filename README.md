@@ -1,2 +1,2 @@
-# oop-lab
+# OOP-LAB
 OOP-LAB
