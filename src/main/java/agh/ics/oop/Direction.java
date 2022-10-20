@@ -6,7 +6,7 @@ public enum Direction {
     RIGHT("Zwierzak skręca w prawo"),
     LEFT("Zwierzak skręca w lewo");
 
-    private String value;
+    private final String value;
 
     Direction(String value) {
         this.value = value;
