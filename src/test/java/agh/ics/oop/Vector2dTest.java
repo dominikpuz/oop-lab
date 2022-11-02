@@ -11,7 +11,7 @@ class Vector2dTest {
         Vector2d ob1 = new Vector2d(0, 0);
         Vector2d ob2 = new Vector2d(1, 0);
         Vector2d ob3 = new Vector2d(1, 1);
-        assertEquals(true, ob1.precedes(ob1));
+        assertTrue(ob1.precedes(ob1));
         assertEquals(true, ob1.precedes(ob2));
         assertEquals(true, ob1.precedes(ob3));
         assertEquals(false, ob3.precedes(ob2));
@@ -23,10 +23,10 @@ class Vector2dTest {
         Vector2d ob1 = new Vector2d(0, 0);
         Vector2d ob2 = new Vector2d(1, 0);
         Vector2d ob3 = new Vector2d(1, 1);
-        assertEquals(true, ob1.follows(ob1));
-        assertEquals(false, ob1.follows(ob2));
-        assertEquals(false, ob1.follows(ob3));
-        assertEquals(true, ob3.follows(ob2));
+        assertTrue(ob1.follows(ob1));
+        assertFalse(ob1.follows(ob2));
+        assertFalse(ob1.follows(ob3));
+        assertTrue(ob3.follows(ob2));
     }
 
     @Test
