@@ -8,7 +8,8 @@ class AnimalTest {
 
     @Test
     void isAt() {
-        Animal animal = new Animal();
+        RectangularMap map = new RectangularMap(4,4);
+        Animal animal = new Animal(map);
         animal.move(MoveDirection.BACKWARD);
         assertTrue(animal.isAt(new Vector2d(2,1)));
         assertFalse(animal.isAt(new Vector2d(2,2)));
@@ -16,7 +17,8 @@ class AnimalTest {
 
     @Test
     void move() {
-        Animal animal = new Animal();
+        RectangularMap map = new RectangularMap(4,4);
+        Animal animal = new Animal(map);
         // Test forward
         animal.move(MoveDirection.FORWARD);
         assertEquals(new Vector2d(2, 3), animal.getPosition());

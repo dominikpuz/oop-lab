@@ -4,9 +4,18 @@ public class Animal {
     private MapDirection direction;
     private Vector2d position;
 
-    public Animal() {
+    private IWorldMap map;
+
+    public Animal(IWorldMap map) {
         direction = MapDirection.NORTH;
         position = new Vector2d(2, 2);
+        this.map = map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition) {
+        direction = MapDirection.NORTH;
+        position = initialPosition;
+        this.map = map;
     }
 
     public Vector2d getPosition() {
@@ -19,10 +28,12 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "direction=" + direction +
-                ", position=" + position +
-                '}';
+        return switch (direction) {
+            case NORTH -> "N";
+            case WEST -> "W";
+            case SOUTH -> "S";
+            case EAST -> "E";
+        };
     }
 
     public boolean isAt(Vector2d position) {
@@ -30,20 +41,20 @@ public class Animal {
     }
 
     public void move(MoveDirection direction) {
-        switch (direction) {
-            case LEFT -> this.direction = this.direction.previous();
-
-            case RIGHT -> this.direction = this.direction.next();
-            case FORWARD -> {
-                this.position = this.position.add(this.direction.toUnitVector());
-                this.position = this.position.lowerLeft(new Vector2d(4, 4));
-                this.position = this.position.upperRight((new Vector2d(0, 0)));
-            }
-            case BACKWARD -> {
-                this.position = this.position.subtract(this.direction.toUnitVector());
-                this.position = this.position.lowerLeft(new Vector2d(4, 4));
-                this.position = this.position.upperRight((new Vector2d(0, 0)));
-            }
+        Vector2d nextPosition = null;
+        if (direction == MoveDirection.LEFT) {
+            this.direction = this.direction.previous();
+            return;
+        } else if (direction == MoveDirection.RIGHT) {
+            this.direction = this.direction.next();
+            return;
+        } else if (direction == MoveDirection.FORWARD) {
+            nextPosition = this.position.add(this.direction.toUnitVector());
+        } else if (direction == MoveDirection.BACKWARD) {
+            nextPosition = this.position.subtract(this.direction.toUnitVector());
+        }
+        if (map.canMoveTo(nextPosition)) {
+            this.position = nextPosition;
         }
     }
 }
