@@ -11,7 +11,7 @@ public class SimulationEngine implements IEngine {
 
     private final Vector2d[] animalPositions;
 
-    private JTextArea area;
+    private JTextArea area = null;
 
     public SimulationEngine(List<MoveDirection> moves, IWorldMap map, Vector2d[] animalPositions, JTextArea area) {
         this.moves = moves;
@@ -21,20 +21,21 @@ public class SimulationEngine implements IEngine {
         for (Vector2d animalPosition : animalPositions) {
             map.place(new Animal(map, animalPosition));
         }
+        area.setText(map.toString());
     }
 
     public SimulationEngine(List<MoveDirection> moves, IWorldMap map, Vector2d[] animalPositions) {
         this.moves = moves;
         this.map = map;
         this.animalPositions = animalPositions;
-        for (Vector2d animalPosition : animalPositions) {
-            map.place(new Animal(map, animalPosition));
+        for (Vector2d animalPosition
+                : animalPositions) {
+            new Animal(map, animalPosition);
         }
-        if (area != null) {
-            area.setText(map.toString());
-        } else {
-            System.out.print(map);
+        if (this.map instanceof GrassField){
+            ((GrassField) map).spawnGrass();
         }
+        System.out.print(map);
     }
 
     @Override

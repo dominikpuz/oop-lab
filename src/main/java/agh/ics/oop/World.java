@@ -11,14 +11,18 @@ import java.util.stream.Collectors;
 public class World {
     public static void main(String[] args) {
         List<MoveDirection> directions = new OptionsParser().parse(args);
-        IWorldMap map = new RectangularMap(10, 5);
+        IWorldMap map = new GrassField(10);
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
 
         JFrame frame = new JFrame();
-        frame.setSize(1000, 700);
+        JPanel container = new JPanel();
+        JScrollPane scrPane = new JScrollPane(container);
+        scrPane.getVerticalScrollBar().setUnitIncrement(16);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JTextArea area = new JTextArea(map.toString());
-        frame.add(area);
+        container.add((area));
+        frame.add(scrPane);
         frame.setVisible(true);
         area.setFont(new Font("Monospaced", Font.PLAIN, 50));
 

@@ -1,21 +1,21 @@
 package agh.ics.oop;
 
-public class Animal {
+public class Animal extends IMapElement{
     private MapDirection direction;
-    private Vector2d position;
-
-    private IWorldMap map;
+    final private IWorldMap map;
 
     public Animal(IWorldMap map) {
         direction = MapDirection.NORTH;
         position = new Vector2d(2, 2);
         this.map = map;
+        map.place(this);
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
         direction = MapDirection.NORTH;
-        position = initialPosition;
+        this.position = initialPosition;
         this.map = map;
+        map.place(this);
     }
 
     public Vector2d getPosition() {
@@ -54,6 +54,11 @@ public class Animal {
             nextPosition = this.position.subtract(this.direction.toUnitVector());
         }
         if (map.canMoveTo(nextPosition)) {
+            Object object = map.objectAt(nextPosition);
+            if (object instanceof Grass) {
+                ((GrassField) map).removeGrass((Grass) object);
+                ((GrassField) map).spawnGrass();
+            }
             this.position = nextPosition;
         }
     }
