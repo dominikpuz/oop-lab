@@ -1,21 +1,36 @@
 package agh.ics.oop;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Animal extends IMapElement{
     private MapDirection direction;
     final private IWorldMap map;
+
+    final private List<IPositionChangeObserver> observers;
 
     public Animal(IWorldMap map) {
         direction = MapDirection.NORTH;
         position = new Vector2d(2, 2);
         this.map = map;
-        map.place(this);
+        this.observers = new ArrayList<>();
+        addObserver((IPositionChangeObserver) map);
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
         direction = MapDirection.NORTH;
         this.position = initialPosition;
         this.map = map;
-        map.place(this);
+        this.observers = new ArrayList<>();
+        addObserver((IPositionChangeObserver) map);
+    }
+
+    void addObserver(IPositionChangeObserver observer) {
+        observers.add(observer);
+    }
+    void removeObserver(IPositionChangeObserver observer) {
+        observers.remove(observer);
     }
 
     public Vector2d getPosition() {
@@ -57,9 +72,14 @@ public class Animal extends IMapElement{
             Object object = map.objectAt(nextPosition);
             if (object instanceof Grass) {
                 ((GrassField) map).removeGrass((Grass) object);
-                ((GrassField) map).spawnGrass();
+                ((GrassField) map).placeGrass();
+            }
+            for (IPositionChangeObserver observer:
+                 observers) {
+                observer.positionChanged(this.position, nextPosition);
             }
             this.position = nextPosition;
+
         }
     }
 }

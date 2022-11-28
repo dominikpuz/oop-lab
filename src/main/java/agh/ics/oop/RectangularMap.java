@@ -2,16 +2,17 @@ package agh.ics.oop;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RectangularMap extends AbstractWorldMap {
 
     public RectangularMap(int width, int height) {
+        super();
         maxWidth = width;
         maxHeight = height;
         minWidth = 0;
         minHeight = 0;
-        animals = new ArrayList<>();
     }
 
     @Override
@@ -29,15 +30,5 @@ public class RectangularMap extends AbstractWorldMap {
         return new Vector2d(maxWidth, maxHeight);
     }
 
-    @Override
-    public Object objectAt(Vector2d position) {
-        for (Animal animal :
-                animals) {
-            if (animal.getPosition().equals(position)) {
-                return animal;
-            }
-        }
-        return null;
-    }
 
 }
