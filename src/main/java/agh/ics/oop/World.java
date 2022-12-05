@@ -1,7 +1,8 @@
 package agh.ics.oop;
 
-import javax.swing.*;
-import java.awt.*;
+import agh.ics.oop.gui.App;
+import javafx.application.Application;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -11,24 +12,12 @@ import java.util.stream.Collectors;
 public class World {
     public static void main(String[] args) {
 //        f b r l f f r r f f f f f f f f
-        List<MoveDirection> directions = new OptionsParser().parse(args);
-        IWorldMap map = new GrassField(10);
-        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
-
-        JFrame frame = new JFrame();
-        JPanel container = new JPanel();
-        JScrollPane scrPane = new JScrollPane(container);
-        scrPane.getVerticalScrollBar().setUnitIncrement(16);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JTextArea area = new JTextArea(map.toString());
-        container.add((area));
-        frame.add(scrPane);
-        frame.setVisible(true);
-        area.setFont(new Font("Monospaced", Font.PLAIN, 50));
-
-        IEngine engine = new SimulationEngine(directions, map, positions, area);
-        engine.run();
+        try {
+            Application.launch(App.class, args);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            System.exit(0);
+        }
     }
 
     static void run(List<Direction> args) {

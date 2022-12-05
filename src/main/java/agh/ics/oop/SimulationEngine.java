@@ -1,6 +1,5 @@
 package agh.ics.oop;
 
-import javax.swing.*;
 import java.util.List;
 
 public class SimulationEngine implements IEngine {
@@ -10,9 +9,6 @@ public class SimulationEngine implements IEngine {
     private final IWorldMap map;
 
     private final Vector2d[] animalPositions;
-
-    private JTextArea area = null;
-
 
     public SimulationEngine(List<MoveDirection> moves, IWorldMap map, Vector2d[] animalPositions) {
         this.moves = moves;
@@ -25,12 +21,7 @@ public class SimulationEngine implements IEngine {
         if (this.map instanceof GrassField){
             ((GrassField) this.map).initializeGrass();
         }
-        System.out.print(map);
-    }
-    public SimulationEngine(List<MoveDirection> moves, IWorldMap map, Vector2d[] animalPositions, JTextArea area) {
-        this(moves, map, animalPositions);
-        this.area = area;
-        area.setText(map.toString());
+        ((AbstractWorldMap) this.map).updateMap();
     }
 
     @Override
@@ -39,19 +30,13 @@ public class SimulationEngine implements IEngine {
         for (MoveDirection move : moves) {
             Vector2d position = animalPositions[animalIndex];
             Animal animal = (Animal) map.objectAt(position);
-            if (area != null) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
             animal.move(move);
-            if (area != null) {
-                area.setText(map.toString());
-            } else {
-                System.out.print(map);
-            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+            ((AbstractWorldMap) this.map).updateMap();
             animalPositions[animalIndex] = animal.getPosition();
             animalIndex = (animalIndex + 1) % animalPositions.length;
         }

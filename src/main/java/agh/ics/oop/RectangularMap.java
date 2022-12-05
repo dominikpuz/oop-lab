@@ -1,9 +1,6 @@
 package agh.ics.oop;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import javafx.scene.layout.GridPane;
 
 public class RectangularMap extends AbstractWorldMap {
 
@@ -14,6 +11,15 @@ public class RectangularMap extends AbstractWorldMap {
         minWidth = 0;
         minHeight = 0;
     }
+
+    public RectangularMap(int width, int height, GridPane grid) {
+        super(grid);
+        maxWidth = width;
+        maxHeight = height;
+        minWidth = 0;
+        minHeight = 0;
+    }
+
 
     @Override
     public boolean canMoveTo(Vector2d position) {

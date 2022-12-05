@@ -27,7 +27,8 @@ class GrassFieldTest {
         Animal animal2 = new Animal(map, new Vector2d(-1, -1));
 //        Then
         assertTrue(map.place(animal1));
-        assertFalse(map.place(animal2));
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> map.place(animal2));
+        assertTrue(thrown.getMessage().contains("is not available to place animal"));
     }
 
     @Test

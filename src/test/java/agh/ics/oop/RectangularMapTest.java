@@ -29,8 +29,10 @@ class RectangularMapTest {
         Animal animal3 = new Animal(map, new Vector2d(5, 5));
 //        Then
         assertTrue(map.place(animal1));
-        assertFalse(map.place(animal2));
-        assertFalse(map.place(animal3));
+        IllegalArgumentException thrown1 = assertThrows(IllegalArgumentException.class, () -> map.place(animal2));
+        IllegalArgumentException thrown2 = assertThrows(IllegalArgumentException.class, () -> map.place(animal3));
+        assertTrue(thrown1.getMessage().contains("is not available to place animal"));
+        assertTrue(thrown2.getMessage().contains("is not available to place animal"));
     }
 
     @Test

@@ -16,14 +16,14 @@ public class Animal extends IMapElement{
         this.map = map;
         this.observers = new ArrayList<>();
         addObserver((IPositionChangeObserver) map);
+        if (this.map instanceof GrassField) {
+            addObserver(((GrassField) map).getBoundsObserver()) ;
+        }
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
-        direction = MapDirection.NORTH;
+        this(map);
         this.position = initialPosition;
-        this.map = map;
-        this.observers = new ArrayList<>();
-        addObserver((IPositionChangeObserver) map);
     }
 
     void addObserver(IPositionChangeObserver observer) {
@@ -79,7 +79,6 @@ public class Animal extends IMapElement{
                 observer.positionChanged(this.position, nextPosition);
             }
             this.position = nextPosition;
-
         }
     }
 }
