@@ -1,7 +1,5 @@
 package agh.ics.oop;
 
-import javafx.scene.layout.GridPane;
-
 import java.util.Random;
 
 public class GrassField extends AbstractWorldMap {
@@ -11,16 +9,6 @@ public class GrassField extends AbstractWorldMap {
 
     public GrassField(int numberOfGrassFields) {
         super();
-        mapBoundary = new MapBoundary();
-        this.numberOfGrassFields = numberOfGrassFields;
-        maxWidth = Integer.MAX_VALUE;
-        maxHeight = Integer.MAX_VALUE;
-        minWidth = Integer.MIN_VALUE;
-        minHeight = Integer.MIN_VALUE;
-    }
-
-    public GrassField(int numberOfGrassFields, GridPane grid) {
-        super(grid);
         mapBoundary = new MapBoundary();
         this.numberOfGrassFields = numberOfGrassFields;
         maxWidth = Integer.MAX_VALUE;

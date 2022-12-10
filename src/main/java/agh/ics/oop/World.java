@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class World {
     public static void main(String[] args) {
-//        f b r l f f r r f f f f f f f f
         try {
             Application.launch(App.class, args);
         } catch (IllegalArgumentException e) {

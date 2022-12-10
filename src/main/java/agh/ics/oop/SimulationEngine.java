@@ -1,27 +1,39 @@
 package agh.ics.oop;
 
+import agh.ics.oop.gui.App;
+
+import java.io.FileNotFoundException;
 import java.util.List;
 
-public class SimulationEngine implements IEngine {
+public class SimulationEngine implements IEngine, Runnable {
 
-    private final List<MoveDirection> moves;
-
+    private List<MoveDirection> moves;
     private final IWorldMap map;
-
     private final Vector2d[] animalPositions;
+    App mapObserver;
 
-    public SimulationEngine(List<MoveDirection> moves, IWorldMap map, Vector2d[] animalPositions) {
-        this.moves = moves;
+    public void setMoves(List<MoveDirection> newMoves) {
+        moves = newMoves;
+    }
+
+    public SimulationEngine(IWorldMap map, Vector2d[] animalPositions, App mapObserver) {
         this.map = map;
         this.animalPositions = animalPositions;
+        this.mapObserver = mapObserver;
         for (Vector2d animalPosition
                 : animalPositions) {
             map.place(new Animal(map, animalPosition));
         }
-        if (this.map instanceof GrassField){
+        if (this.map instanceof GrassField) {
             ((GrassField) this.map).initializeGrass();
         }
-        ((AbstractWorldMap) this.map).updateMap();
+        if (mapObserver != null) {
+            this.mapObserver.updateMap();
+        }
+    }
+    public SimulationEngine(List<MoveDirection> moves, IWorldMap map, Vector2d[] animalPositions, App mapObserver) {
+        this(map, animalPositions, mapObserver);
+        this.moves = moves;
     }
 
     @Override
@@ -30,13 +42,14 @@ public class SimulationEngine implements IEngine {
         for (MoveDirection move : moves) {
             Vector2d position = animalPositions[animalIndex];
             Animal animal = (Animal) map.objectAt(position);
-            animal.move(move);
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-            ((AbstractWorldMap) this.map).updateMap();
+            try {
+                animal.move(move);
+                if (mapObserver != null) {
+                    this.mapObserver.updateMap();
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
             animalPositions[animalIndex] = animal.getPosition();
             animalIndex = (animalIndex + 1) % animalPositions.length;
         }

@@ -51,6 +51,4 @@ public class MapBoundary implements IPositionChangeObserver{
         minBounds = new Vector2d(xAxis.first().getX(), yAxis.first().getY());
         maxBounds = new Vector2d(xAxis.last().getX(), yAxis.last().getY());
     }
-
-
 }

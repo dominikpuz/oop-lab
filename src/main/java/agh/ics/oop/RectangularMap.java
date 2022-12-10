@@ -12,14 +12,6 @@ public class RectangularMap extends AbstractWorldMap {
         minHeight = 0;
     }
 
-    public RectangularMap(int width, int height, GridPane grid) {
-        super(grid);
-        maxWidth = width;
-        maxHeight = height;
-        minWidth = 0;
-        minHeight = 0;
-    }
-
 
     @Override
     public boolean canMoveTo(Vector2d position) {

@@ -2,12 +2,14 @@ package agh.ics.oop;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimalTest {
 
     @Test
-    void isAt() {
+    void isAt() throws FileNotFoundException {
         RectangularMap map = new RectangularMap(4,4);
         Animal animal = new Animal(map);
         animal.move(MoveDirection.BACKWARD);
@@ -16,7 +18,7 @@ class AnimalTest {
     }
 
     @Test
-    void move() {
+    void move() throws FileNotFoundException {
         RectangularMap map = new RectangularMap(4,4);
         Animal animal = new Animal(map);
         // Test forward

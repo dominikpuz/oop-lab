@@ -9,4 +9,9 @@ public class Grass extends IMapElement {
     public String toString() {
         return "*";
     }
+
+    @Override
+    public String getTextureName() {
+        return "grass.png";
+    }
 }

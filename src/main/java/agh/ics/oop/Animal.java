@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ public class Animal extends IMapElement{
     final private IWorldMap map;
 
     final private List<IPositionChangeObserver> observers;
+
+
 
     public Animal(IWorldMap map) {
         direction = MapDirection.NORTH;
@@ -37,6 +40,16 @@ public class Animal extends IMapElement{
         return position;
     }
 
+    @Override
+    public String getTextureName() {
+        return switch (direction) {
+            case NORTH -> "up.png";
+            case SOUTH -> "down.png";
+            case WEST -> "left.png";
+            case EAST -> "right.png";
+        };
+    }
+
     public MapDirection getDirection() {
         return direction;
     }
@@ -55,7 +68,7 @@ public class Animal extends IMapElement{
         return this.position.equals(position);
     }
 
-    public void move(MoveDirection direction) {
+    public void move(MoveDirection direction) throws FileNotFoundException {
         Vector2d nextPosition = null;
         if (direction == MoveDirection.LEFT) {
             this.direction = this.direction.previous();
